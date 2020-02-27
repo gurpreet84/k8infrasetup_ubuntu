@@ -29,6 +29,19 @@
   end
   end
   end   
+  
+  # define  nginx server for load balancing masters
+  config.vm.define "kubcluster" do |subconfig|  
+  
+  subconfig.vm.box = BOX_IMAGE    
+  subconfig.vm.hostname = "kubcluster"   
+  subconfig.vm.network :public_network, ip: "192.168.1.#{162}" 
+  subconfig.vm.provider :virtualbox do |vb|
+  vb.name = "kub_lb"
+  vb.memory = 4096
+  end
+  subconfig.vm.provision "shell", path: "installdhcp.sh"
+  end
   (1..NODE_COUNT).each do |i| 
   config.vm.define "node#{i}" do |subconfig|  
   
