@@ -15,7 +15,7 @@
  # config.vm.box = "bento/ubuntu-18.04"
   # -*- mode: ruby -*- # vi: set ft=ruby : # Every Vagrant development environment requires a box. You can search for # boxes at https://atlas.hashicorp.com/search. 
   BOX_IMAGE = "bento/ubuntu-18.04"
-  MASTER_COUNT=2
+  MASTER_COUNT=3
   NODE_COUNT = 3
   Vagrant.configure("2") do |config|  
   (1..MASTER_COUNT).each do |i|
@@ -25,7 +25,7 @@
   subconfig.vm.network :public_network, ip: "192.168.1.#{i + 159}"   
   subconfig.vm.provider :virtualbox do |vb|
   vb.name = "kubmaster#{i}"
-  vb.memory = 4096
+  vb.memory = 2048
   end
   end
   end   
@@ -38,7 +38,7 @@
   subconfig.vm.network :public_network, ip: "192.168.1.#{162}" 
   subconfig.vm.provider :virtualbox do |vb|
   vb.name = "kub_lb"
-  vb.memory = 4096
+  vb.memory = 1024
   end
   subconfig.vm.provision "shell", path: "installdhcp.sh"
   end
@@ -50,7 +50,7 @@
   subconfig.vm.network :public_network, ip: "192.168.1.#{i + 162}" 
   subconfig.vm.provider :virtualbox do |vb|
   vb.name = "kubnode#{i}"
-  vb.memory = 4096
+  vb.memory = 2048
   end
    subconfig.vm.provision "shell", path: "installdhcp.sh"
   end   
